@@ -21,9 +21,9 @@ export default class Order extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-
-    this.props.handleSubmit(this.state);
-
+    if (this.handleValidate()) {
+      this.props.handleSubmit(this.state);
+    }
     this.formClear();
   };
 
@@ -32,6 +32,14 @@ export default class Order extends React.Component {
       [event.target.name]: event.target.value
     });
   };
+
+  handleValidate() {
+    let ok = true;
+    for (var i; i < this.state.len(); i++) {
+      ok = ok && this.state[field] !== '';
+    }
+    return ok;
+  }
 
   render() {
     return <form onSubmit={this.handleSubmit}>
