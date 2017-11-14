@@ -36,7 +36,7 @@ export default class Order extends React.Component {
   handleValidate() {
     let ok = true;
     for (var i; i < this.state.len(); i++) {
-      ok = ok && this.state[field] !== '';
+      ok = ok && this.state[i] !== '';
     }
     return ok;
   }
