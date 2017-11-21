@@ -10,7 +10,8 @@ describe('Money', () => {
   * - currency - тип валюты, "RUB", "EUR", "GBP", "USD"
   * Маска для валют RUB = ₽, EUR = €, GBP = £, USD = $
   * К примеру, мы передаем value = 4000.45, currency = RUB - Получаем <span><span>4000</span><span>,45</span><span>₽</span></span>
-  * */
+  * 
+  */
 
   describe('Базовые состояния', () => {
     it('Рендерим доллары', () => {
