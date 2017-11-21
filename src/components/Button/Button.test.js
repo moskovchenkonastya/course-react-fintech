@@ -3,9 +3,7 @@ import { shallow } from 'enzyme';
 import Button from './Button';
 
 
-export default ({type, children, onClick}) => {
-  return (<button type={type} onClick={onClick}>{children}</button>);
-}
+
 
 describe('Button', () => {
   /*
