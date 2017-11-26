@@ -13,7 +13,9 @@ export default () => (
 );
 */
 
-export default class CreateAccount extends React.Component {
+const validateRequire = value => !value;
+
+class CreateAccount extends React.Component {
   
   constructor(props) {
     super(props);
@@ -25,14 +27,9 @@ export default class CreateAccount extends React.Component {
     };
   }
 
-  static defoultProps = {
-    name: '',
-    currency: '',
-    description: ''
-  } 
+  
 
-  validationsForm() {
-    
+  validationsForm() {  
     let status = true
     Object.keys(this.state).forEach(item => {
       if(validateRequire(this.state[item])) {
@@ -56,6 +53,7 @@ export default class CreateAccount extends React.Component {
     event.preventDefault();
 
     if (this.validationsForm()) {
+
       this.props.createAccount(this.state);
       
       this.formClear();
@@ -93,3 +91,4 @@ export default class CreateAccount extends React.Component {
   };
 
 }
+export default CreateAccount;
