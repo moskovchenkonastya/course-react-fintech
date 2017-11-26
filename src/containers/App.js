@@ -41,6 +41,15 @@ class App extends Component {
     });
   }
 
+  CreateAndAddAccount = account => {
+    this.setState({
+      accounts: {
+        ...this.state.accounts,
+        [Object.keys(this.state.accounts).length + 1]: account
+      }
+    });
+  };
+
   render() {
     return (
       <Router>
@@ -55,7 +64,7 @@ class App extends Component {
                 path='/account/:accountId'
                 component={() => <Account operations={this.state.operations} onSubmit={this.handleSubmit}/>}
               />
-              <Route path='/create-account' component={CreateAccount} />
+              <Route path='/create-account' component={() => (<CreateAccount createAccount={ this.CreateAndAddAccount } />)} />
             </div>
           </div>
         </div>
