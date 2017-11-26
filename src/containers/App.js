@@ -56,13 +56,14 @@ class App extends Component {
         <div className="App">
           <div className='App__layout'>
             <div className='App_sidebar'>
-              <Sidebar />
+            <Sidebar accounts={this.state.accounts} />
             </div>
             <div className='App__content'>
-              <Route exact path='/' component={Home} />
+              <Route exact path='/' component={ Home } />
+              <Route exact path='/about' component={ About } />
               <Route
                 path='/account/:accountId'
-                component={() => <Account operations={this.state.operations} onSubmit={this.handleSubmit}/>}
+                component={() => <Account operations={ this.state.operations } onSubmit={ this.handleSubmit }/>}
               />
               <Route path='/create-account' component={() => (<CreateAccount createAccount={ this.CreateAndAddAccount } />)} />
             </div>
