@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import About from '../pages/About';
 
 /* мы должны замоикровать реализацию роутинга для тестов */
-jest.mock('react-router-dom/BrowserRouter', () => ({children}) => <div>{children}</div>);
+jest.mock('react-router-dom/BrowserRouter', () => ({children}) => (<div>{children}</div>));
 
 /* При мокировании, остальные файлы нужно переводить на require. Виноват сам принцип ES modules */
 const { MemoryRouter } = require('react-router-dom');
@@ -31,11 +31,11 @@ describe('Интеграционный тест', () => {
       expect(wrapper.find(About).length).toBe(1);
     });
 
-    it('На странице присутствует h1 тег', function () {
+    it('На странице присутствует h1 тег', function() {
       expect(wrapper.find('h1').length).toBe(1);
     });
 
-    it('На странице присутствует p тег', function () {
+    it('На странице присутствует p тег', function() {
       expect(wrapper.find('p').length).toBe(1);
     });
   });
@@ -72,7 +72,7 @@ describe('Интеграционный тест', () => {
 
       it('Повторно отправляем форму и проверяем, что там 2 account', () => {
         const result = ["1", "2"];
-        setValue('Дебетовка', 'USB', 'Безумные траты');
+        setValue('Дебетовка', 'USD', 'Безумные траты');
         wrapper.find('form').simulate('submit');
 
         expect(Object.keys(wrapper.find(App).instance().state.accounts)).toEqual(result);
