@@ -59,11 +59,9 @@ export default class CreateAccount extends React.Component {
       this.props.createAccount(this.state);
       
       this.formClear();
+    } else {
+      return 
     }
-
-    this.props.createAccount(this.state);
-
-    this.formClear();
   };
 
   handleInputChange = event => {
