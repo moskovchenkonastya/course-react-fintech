@@ -17,17 +17,11 @@ const validateRequire = value => !value;
 
 class CreateAccount extends React.Component {
   
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      name: '',
-      currency: '',
-      description: ''
-    };
+  static defaultProps = {
+    name: '',
+    currency: '',
+    description: '',
   }
-
-  
 
   validationsForm() {  
     let status = true
@@ -53,9 +47,7 @@ class CreateAccount extends React.Component {
     event.preventDefault();
 
     if (this.validationsForm()) {
-
       this.props.createAccount(this.state);
-      
       this.formClear();
     } else {
       return 
