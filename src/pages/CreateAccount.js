@@ -15,10 +15,14 @@ export default () => (
 
 export default class CreateAccount extends React.Component {
   
-  static PropTypes = {
-    name: PropTypes.string,
-    currency: PropTypes.string,
-    description: PropTypes.string
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      name: '',
+      currency: '',
+      description: ''
+    };
   }
 
   static defoultProps = {
@@ -28,13 +32,12 @@ export default class CreateAccount extends React.Component {
   } 
 
   validationsForm() {
-
-    let status = true;
-
+    
+    let status = true
     Object.keys(this.state).forEach(item => {
       if(validateRequire(this.state[item])) {
         status = false;
-        return false;
+        return status;
       }
     });
 
@@ -52,8 +55,10 @@ export default class CreateAccount extends React.Component {
   handleSubmit = event => {
     event.preventDefault();
 
-    if (!this.validationsForm()) {
-      return;
+    if (this.validationsForm()) {
+      this.props.createAccount(this.state);
+      
+      this.formClear();
     }
 
     this.props.createAccount(this.state);

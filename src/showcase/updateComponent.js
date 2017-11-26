@@ -4,7 +4,7 @@ import React from 'react';
 
 export default class updateComponent extends React.Component {
 
-    ComponentUpdate(nextProps) {
+  shouldComponentUpdate(nextProps) {
       return this.props.status !== nextProps.status || this.props.accounts !== nextProps.accounts;
     }
   
