@@ -17,11 +17,16 @@ const validateRequire = value => !value;
 
 class CreateAccount extends React.Component {
   
-  static defaultProps = {
-    name: '',
-    currency: '',
-    description: '',
-  }
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      name: '',
+      currency: '',
+      description: ''
+    };
+  } 
+
 
   validationsForm() {  
     let status = true
