@@ -1,76 +1,82 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import Sidebar from '../components/Sidebar/Sidebar';
-import Home from '../pages/Home';
-import Account from '../pages/Account';
-import CreateAccount from '../pages/CreateAccount';
+import React from 'react';
+import { mount } from 'enzyme';
+import About from '../pages/About';
 
-import database from '../services/database';
+/* мы должны замоикровать реализацию роутинга для тестов */
+jest.mock('react-router-dom/BrowserRouter', () => ({children}) => (<div>{children}</div>));
 
-import {
-  BrowserRouter as Router,
-  Route
-} from 'react-router-dom';
+/* При мокировании, остальные файлы нужно переводить на require. Виноват сам принцип ES modules */
+const { MemoryRouter } = require('react-router-dom');
+const App = require('./App').default;
 
-import './App.css';
+const createEvent = (name, value) => ({ target: { name, value }});
 
-class App extends Component {
-  constructor() {
-    super();
+describe('Интеграционный тест', () => {
+  /*
+  * Проверяем работоспособность главного компонента приложения
+  * */
 
-    this.state = {
-      accounts: {},
-      user: {},
-      operations: {}
-    }
-  }
+  describe('Добавлен роут /about', () => {
+    /*
+    * Нужно добавить для приложения роут /about, который рендерит отобразит страницу
+    * На странице у нас должен быть присутсвовать h1 и p тег
+    * */
+    const wrapper = mount(
+      <MemoryRouter initialEntries={['/about']}>
+        <App/>
+      </MemoryRouter>
+    );
 
-  handleSubmit = (order) => {
-    database.ref('operations').push(order);
-  };
+    it('Проверяем то, что роут создан', () => {
+      expect(wrapper.find(About).length).toBe(1);
+    });
 
-  componentDidMount() {
-    const operationsRef = database.ref('operations');
+    it('На странице присутствует h1 тег', function() {
+      expect(wrapper.find('h1').length).toBe(1);
+    });
 
-    operationsRef.on('value', (snapshot) => {
-      let items = snapshot.val();
+    it('На странице присутствует p тег', function() {
+      expect(wrapper.find('p').length).toBe(1);
+    });
+  });
 
-      this.setState({
-        operations: { ...this.state.operations, ...items }
+  describe('Получать данные от страницы /create-account', () => {
+    /*
+    Необходимо добавить возможность получения данных с страницы, /create-account в компонент App
+    После отправки формы, мы должны обновить state компонента App.js.
+    В accounts мы должны добавлять с ключем начиная от 1
+    */
+    const wrapper = mount(
+      <MemoryRouter initialEntries={['/create-account']}>
+        <App/>
+      </MemoryRouter>
+    );
+
+    const setValue = (name, currency, des) => {
+      wrapper.find('input[name="name"]').simulate('change',createEvent('name', name));
+      wrapper.find('input[name="currency"]').simulate('change',createEvent('currency', currency));
+      wrapper.find('input[name="description"]').simulate('change',createEvent('description', des));
+    };
+
+    describe('Работа с формой', () => {
+      it('Заполняем форму', () => {
+        setValue('Кредитка', 'RUB', 'Безумные траты');
+      });
+      it('Отправляем форму', () => {
+        wrapper.find('form').simulate('submit');
+      });
+      it('Проверяем присутсвие стейта в App.js', () => {
+        const result = {"1": {"currency": "RUB", "description": "Безумные траты", "name": "Кредитка"}};
+        expect(wrapper.find(App).instance().state.accounts).toEqual(result);
+      });
+
+      it('Повторно отправляем форму и проверяем, что там 2 account', () => {
+        const result = ["1", "2"];
+        setValue('Дебетовка', 'USD', 'Безумные траты');
+        wrapper.find('form').simulate('submit');
+
+        expect(Object.keys(wrapper.find(App).instance().state.accounts)).toEqual(result);
       });
     });
-  }
-
-  CreateAndAddAccount = account => {
-    this.setState({
-      accounts: {
-        ...this.state.accounts,
-        [Object.keys(this.state.accounts).length + 1]: account
-      }
-    });
-  };
-
-  render() {
-    return (
-      <Router>
-        <div className="App">
-          <div className='App__layout'>
-            <div className='App_sidebar'>
-              <Sidebar />
-            </div>
-            <div className='App__content'>
-              <Route exact path='/' component={Home} />
-              <Route
-                path='/account/:accountId'
-                component={() => <Account operations={this.state.operations} onSubmit={this.handleSubmit}/>}
-              />
-              <Route path='/create-account' component={() => (<CreateAccount createAccount={ this.CreateAndAddAccount } />)} />
-            </div>
-          </div>
-        </div>
-      </Router>
-    );
-  }
-}
-
-export default App;
+  });
+});
