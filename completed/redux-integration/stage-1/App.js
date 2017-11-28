@@ -22,46 +22,29 @@ class App extends Component {
     this.props.subscribeToFirebase('accounts', 'UPDATE_ACCOUNT');
   }
 
-  CreateAndAddAccount = account => {
-    this.setState({
-      accounts: {
-        ...this.state.accounts,
-        [Object.keys(this.state.accounts).length + 1]: account
-      }
-    });
-  };
-
   render() {
+    const { accounts, operations } = this.props;
+
     return (
       <Router>
         <div className="App">
           <div className='App__layout'>
             <div className='App_sidebar'>
-            <Sidebar accounts={this.state.accounts} />
+              <Sidebar accounts={accounts} />
             </div>
             <div className='App__content'>
-<<<<<<< HEAD
-              <Route exact path='/' component={ Home } />
-              <Route exact path='/about' component={ About } />
-              <Route
-                path='/account/:accountId'
-                component={() => <Account operations={ this.state.operations } onSubmit={ this.handleSubmit }/>}
-              />
-              <Route path='/create-account' component={() => (<CreateAccount createAccount={ this.CreateAndAddAccount } />)} />
-=======
               <Switch>
                 <Route exact path='/' component={Home} />
                 <Route
                   path='/account/:accountId'
-                  component={Account}
+                  component={() => <Account operations={operations} accounts={accounts} onSubmit={this.createOperation}/>}
                 />
                 <Route
                   path='/create-account'
-                  component={CreateAccount}
+                  component={() => <CreateAccount createAcoount={this.createAccount}/>}
                 />
                 <Route path='/about' component={About} />
               </Switch>
->>>>>>> eb384843471cf9a4b1f7db0bd4773a064a0fe486
             </div>
           </div>
         </div>
@@ -70,12 +53,14 @@ class App extends Component {
   }
 }
 
-<<<<<<< HEAD
-export default App;
-=======
+const mapStateToProps = state => ({
+  accounts: state.accounts,
+  user: state.user,
+  operations: state.operations
+});
+
 const mapDispatchToProps = dispatch => ({
   subscribeToFirebase: (database, callType) => dispatch(subscribeFirebaseAction(database, callType))
 });
 
-export default connect(undefined, mapDispatchToProps)(App);
->>>>>>> eb384843471cf9a4b1f7db0bd4773a064a0fe486
+export default connect(mapStateToProps, mapDispatchToProps)(App);
