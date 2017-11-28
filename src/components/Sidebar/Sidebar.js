@@ -9,7 +9,7 @@ import {
 
 import './Sidebar.css';
 
-const Sidebar = ({ accounts }) => {
+const Sidebar = ({ accounts, operations }) => {
   const accountKeys = Object.keys(accounts);
 
   return (
@@ -20,6 +20,13 @@ const Sidebar = ({ accounts }) => {
 
       {accountKeys.map(key => {
         const account = accounts[key];
+        const sum = Object.keys(operations).reduce(
+          (sumOp, i) => {
+            if (operations[i].account === key && !isNaN(parseFloat(operations[i].amount))) {
+              sumOp += parseFloat(operations[i].amount);
+            }
+            return sumOp;
+          }, 0);
 
         return (
           <NavLink key={key} to={`/account/${key}`} className='Link' activeClassName='Link--active'>
