@@ -9,6 +9,40 @@ import {
 
 import './Sidebar.css';
 
+<<<<<<< HEAD
+export default ({ accounts }) => {
+  return (
+    <div className='Sidebar'>
+      <div className='Sidebar__header'>
+        Счета
+      </div>
+      {Object.keys(accounts).map((id) => (
+        <NavLink key = {id} to={'/account/' + id} className='Link' activeClassName='Link--active'>
+          <div className='Sidebar__account'>
+            <div className='Sidebar__account-name'>
+              {accounts[id].name}
+            </div>
+            <div className='Sidebar__account-amount'>
+              <Money value={ accounts[id].amount } currency={ accounts[id].currency } />
+            </div>
+          </div>
+        </NavLink>
+      )
+      )}
+
+      <NavLink to='/create-account' className='Link' activeClassName='Link--active'>
+        <div className='Sidebar__account'>
+          <div className='Sidebar__account-name'>
+            Добавить счет
+          </div>
+        </div>
+      </NavLink>
+
+      <NavLink to='/about' className='Link' activeClassName='Link--active'>
+        <div className='Sidebar__account'>
+          <div className='Sidebar__account-name'>
+            About
+=======
 const Sidebar = ({ accounts }) => {
   const accountKeys = Object.keys(accounts);
 
@@ -39,12 +73,15 @@ const Sidebar = ({ accounts }) => {
         <div className='Sidebar__account'>
           <div className='Sidebar__account-name'>
             Добавить счет
+>>>>>>> eb384843471cf9a4b1f7db0bd4773a064a0fe486
           </div>
         </div>
       </NavLink>
     </div>
   );
 };
+<<<<<<< HEAD
+=======
 
 Sidebar.defaultProps = {
   accounts: {}
@@ -56,3 +93,4 @@ const mapStateToProps = state => ({
 
 
 export default withRouter(connect(mapStateToProps)(Sidebar));
+>>>>>>> eb384843471cf9a4b1f7db0bd4773a064a0fe486

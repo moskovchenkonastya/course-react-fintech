@@ -28,7 +28,8 @@ Money.propTypes = {
 };
 
 Money.defaultProps = {
-  currency: 'RUB'
+  currency: 'RUB',
+  value: 0
 };
 
 export default Money
