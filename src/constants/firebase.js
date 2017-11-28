@@ -1,4 +1,5 @@
 const config = {
+	
   apiKey: "AIzaSyAGcGJR2mwB4zCpQpqx3ki6yyphY90Amdg",
   authDomain: "finance-assistant-cf3be.firebaseapp.com",
   databaseURL: "https://finance-assistant-cf3be.firebaseio.com",
