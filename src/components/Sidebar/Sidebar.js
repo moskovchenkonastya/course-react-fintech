@@ -50,14 +50,6 @@ Sidebar.defaultProps = {
   accounts: {}
 };
 
-const mapStateToProps = state => ({
-  accounts: state.accounts
-});
-
-Sidebar.defaultProps = {
-  accounts: {}
-};
-
 const mapStateToProps = ({accounts, operations}) => ({
   accounts,
   operations
