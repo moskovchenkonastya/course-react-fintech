@@ -4,9 +4,11 @@ export const REORDER_NOTE = 'REORDER_NOTE'
 export const UPDATE_NOTE = 'UPDATE_NOTE'
 export const DELETE_ALL_NOTES = 'DELETE_ALL_NOTES'
 
-const i = 0
+
 
 export default (state = [], action) => {
+  const i = 0;
+  
     switch(action.type) {
         
       case ADD_NOTE:
