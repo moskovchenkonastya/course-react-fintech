@@ -1,7 +1,5 @@
 import databaseInstants from '../services/database';
 
-import { updateFirebaseAction } from './updateFirebase';
-
 export const SUBSCRIBE_FIREBASE = 'SUBSCRIBE_FIREBASE';
 
 const subscribeFirebase = store => next => action => {

@@ -1,4 +1,5 @@
 // <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/3.7.2/redux.js"></script>
+import Redux from 'redux';
 
 function createStore(reducer, initalState) {
   let state = initalState;
