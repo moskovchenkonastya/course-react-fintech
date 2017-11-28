@@ -35,7 +35,7 @@ const Sidebar = ({ accounts, operations }) => {
                 {account.name}
               </div>
               <div className='Sidebar__account-amount'>
-                <Money value={account.amount} currency={account.currency} />
+                <Money value={ sum } currency={ account.currency } />
               </div>
             </div>
           </NavLink>
@@ -57,7 +57,7 @@ Sidebar.defaultProps = {
   accounts: {}
 };
 
-const mapStateToProps = ({accounts, operations}) => ({
+const mapStateToProps = ({ accounts, operations }) => ({
   accounts,
   operations
 });
